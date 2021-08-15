@@ -8,6 +8,11 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+# 伪装成浏览器的headers访问
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+}
+
 
 def get_tides_list():
     """
@@ -15,7 +20,7 @@ def get_tides_list():
     """
     tides_list = []
     url = 'http://www.fd.show/list-262-1.html?tid='
-    res = requests.get(url)
+    res = requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
     for option in soup.find_all('option'):
         tid = option.attrs.get('value')
@@ -39,7 +44,7 @@ def find_title(tid, title, exact=False, show_detial=True):
         return []
 
     url = 'http://www.fd.show/list-262-1.html?tid={}'.format(tid)
-    res = requests.get(url)
+    res = requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text, 'html.parser')
 
     pages_root = soup.find(id='pages')
@@ -61,7 +66,7 @@ def find_title(tid, title, exact=False, show_detial=True):
             print('正在爬取第{}页内容'.format(i))
 
         url_i = url.format(i, tid)
-        res_i = requests.get(url_i)
+        res_i = requests.get(url_i, headers=headers)
 
         soup_i = BeautifulSoup(res_i.text, 'html.parser')
         for tag in soup_i.find_all('div', class_='card'):

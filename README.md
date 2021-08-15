@@ -4,7 +4,11 @@
 
 # Dependence
 * Beautiful Soup 4
-* requests
+* Requests
+
+# Usage
+1. 输入类别代号（大类，如A, B, C, T2等，无需输入后面的数字。具体支持列表见官网公示名单）
+2. 直接输入作品名进行模糊查询
 
 # Build
 1. `cd NCDA-Searcher`
